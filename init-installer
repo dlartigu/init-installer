@@ -109,9 +109,8 @@ function setvag()
 function doall()
 {
     header
+    rmgoinfre > /dev/null 2>&1
     echo -e "$_GREY\tYour current login is:$_DEF $_CYAN $user1 \n\n"
-    cd ~/goinfre/
-    rm -rf * 2>&1
     mkdir /Volumes/Storage/goinfre/$user1/vagrant > /dev/null 2>&1
     echo -e "$_GREEN \tWorking folder successfully created!"
     echo -e "$_CYAN \t/Volumes/Storage/goinfre/$user1/vagrant \n"
@@ -147,7 +146,7 @@ do
     echo -e "$_CYAN\t  PRESS   1) Set ENV"
     echo -e "$_CYAN\t  PRESS   2) Setup Virtualbox"
     echo -e "$_CYAN\t  PRESS   3) Setup Vagrant\n"
-    echo -e "$_GREEN\t  PRESS   4) Do All (This will remove everything in ~/goinfre)\n"
+    echo -e "$_GREEN\t  PRESS   4) Do All (Please remove everything in ~/goinfre)\n"
     echo -e "$_RED\t  PRESS   "0" TO EXIT\n"
     read -p $'\e[35m\tYOUR CHOICE:\e[0m ' -n 1 INPUT
     case $INPUT in
