@@ -1,0 +1,170 @@
+# !/bin/bash
+# !/usr/bin/env bash
+# !/bin/sh
+# !/bin/sh -
+#Fichier "Suppression user"
+# Text format
+_DEF='\033[0m'
+_GRAS='\033[1m'
+_SOUL='\033[4m'
+_CLIG='\033[5m'
+_SURL='\033[7m'
+
+# Colors
+_BLACK='\033[30m'
+_RED='\033[31m'
+_GREEN='\033[32m'
+_YELLOW='\033[33m'
+_BLUE='\033[34m'
+_PURPLE='\033[35m'
+_CYAN='\033[36m'
+_GREY='\033[37m'
+
+# Background
+_IBLACK='\033[40m'
+_IRED='\033[41m'
+_IGREEN='\033[42m'
+_IYELLOW='\033[43m'
+_IBLUE='\033[44m'
+_IPURPLE='\033[45m'
+_ICYAN='\033[46m'
+_IGREY='\033[47m'
+
+user1=$(id -un)
+
+function header()
+{
+    clear
+    echo -e "$_GREEN"
+    echo "                            
+                                          (,*((**.                 
+                                     @/(((((((((((((((&            
+                                  *(((( @         &(((((          
+                                 /((((                @((((        
+                                (((#         (((        &(((@      
+                               (((           (((          #((      
+                              /(((           (((           (((     
+                              (((            (((           (((     
+                              (((            (((           (((    
+                              ((/      ,(((( (((&*(((      @((     
+                              /((&       #((((((((((       /((&    
+                               &(((        &((((((#       ((#     
+                                (((&         ((          *((#      
+                                &(((/&                 ((((,       
+                                   (((@ ((((((((((((/ (((,"
+
+    echo "
+        o-O-o o   o o-O-o o-O-o     o-O-o o   o  o-o  o-O-o   O  o    o    o--o o--o  
+          |   |\  |   |     |         |   |\  | |       |    / \ |    |    |    |   | 
+          |   | \ |   |     |         |   | \ |  o-o    |   o---o|    |    O-o  O-Oo  
+          |   |  \|   |     |         |   |  \|     |   |   |   ||    |    |    |  \  
+        o-O-o o   o o-O-o   o       o-O-o o   o o--o    o   o   oO---oO---oo--o o   o 
+                                          @dlartigu
+    "
+    echo -e "$_DEF"
+}
+
+function setenv()
+{
+    header
+    echo -e "$_GREY\tYour current login is:$_DEF $_CYAN $user1 \n\n"
+    mkdir /Volumes/Storage/goinfre/$user1/vagrant > /dev/null 2>&1
+    echo -e "$_GREEN \tWorking folder successfully created!"
+    echo -e "$_CYAN \t/Volumes/Storage/goinfre/$user1/vagrant \n"
+    echo 'export VAGRANT_HOME=/Volumes/Storage/goinfre/$user1/vagrant' >> ~/.zshrc > /dev/null 2>&1
+    echo -e "$_GREEN \tEnvironment variable successfully created! $_DEF"
+    env=$(printenv | grep vagrant)
+    echo -e "$_CYAN \t$env"
+}
+
+function setvb()
+{
+    header
+    export VBOX_USER_HOME=/Volumes/Storage/goinfre/$user1 > /dev/null 2>&1
+    vboxmanage setproperty machinefolder /Volumes/Storage/goinfre/$user1 > /dev/null 2>&1
+    echo -e "$_GREEN \tVirtualbox default folder is now setup!\n $_DEF"
+    echo -e "$_GREY \tVirtualBox default folder: $_DEF"
+    echo -e "$_CYAN \t/Volumes/Storage/goinfre/$user1 \n"
+}
+
+function setvag()
+{
+    header
+    cp Vagrantfile ~/goinfre/ 
+    echo -e "$_GREEN \tVagrantfile successfully copied in:"
+    echo -e "$_CYAN \t~/goinfre/ \n"
+    echo -e "$_RED \tPlease wait!"
+    echo -e "$_GREY \tVagrant installation progress\n"
+    cd ~/goinfre/
+    vagrant plugin install vagrant-vbguest > /dev/null 2>&1
+    echo -e "$_GREY \tInstalled the plugin 'vagrant-vbguest'!\n $_DEF"
+    vagrant up > /dev/null 2>&1
+    vagrant vbguest > /dev/null 2>&1
+    vagrant reload > /dev/null 2>&1
+    echo -e "$_GREEN \tInstallation complete!"
+    echo -e "$_CYAN \tYou can now exit this program and launch you vm!"
+    echo -e "$_CYAN \tYou can go in ~/goinfre and execute 'vagrant ssh!'"
+}
+
+function doall()
+{
+    header
+    echo -e "$_GREY\tYour current login is:$_DEF $_CYAN $user1 \n\n"
+    cd ~/goinfre/
+    rm -rf * 2>&1
+    mkdir /Volumes/Storage/goinfre/$user1/vagrant > /dev/null 2>&1
+    echo -e "$_GREEN \tWorking folder successfully created!"
+    echo -e "$_CYAN \t/Volumes/Storage/goinfre/$user1/vagrant \n"
+    echo 'export VAGRANT_HOME=/Volumes/Storage/goinfre/$user1/vagrant' >> ~/.zshrc > /dev/null 2>&1
+    echo -e "$_GREEN \tEnvironment variable successfully created! $_DEF"
+    env=$(printenv | grep vagrant)
+    echo -e "$_CYAN \t$env\n"
+    export VBOX_USER_HOME=/Volumes/Storage/goinfre/$user1 > /dev/null 2>&1
+    vboxmanage setproperty machinefolder /Volumes/Storage/goinfre/$user1 > /dev/null 2>&1
+    echo -e "$_GREEN \tVirtualbox default folder is now setup!\n $_DEF"
+    echo -e "$_GREY \tVirtualBox default folder: $_DEF"
+    echo -e "$_CYAN \t/Volumes/Storage/goinfre/$user1 \n"
+    cp Vagrantfile ~/goinfre/ 
+    echo -e "$_GREEN \tVagrantfile successfully copied in:"
+    echo -e "$_CYAN \t~/goinfre/ \n"
+    echo -e "$_RED \tPlease wait!"
+    echo -e "$_GREY \tVagrant installation progress\n"
+    cd ~/goinfre/
+    vagrant plugin install vagrant-vbguest > /dev/null 2>&1
+    echo -e "$_GREY \tInstalled the plugin 'vagrant-vbguest'!\n $_DEF"
+    vagrant up > /dev/null 2>&1
+    vagrant vbguest > /dev/null 2>&1
+    vagrant reload > /dev/null 2>&1
+    echo -e "$_GREEN \tInstallation complete!"
+    echo -e "$_CYAN \tYou can now exit this program and launch you vm!"
+    echo -e "$_CYAN \tYou can go in ~/goinfre and execute 'vagrant ssh!'"
+}
+
+while :
+do
+    header
+    echo -e "$_RED Please make sure you have installed Vagrant and VirtualBox from the managed command center!\n\n"
+    echo -e "$_CYAN\t  PRESS   1) Set ENV"
+    echo -e "$_CYAN\t  PRESS   2) Setup Virtualbox"
+    echo -e "$_CYAN\t  PRESS   3) Setup Vagrant\n"
+    echo -e "$_GREEN\t  PRESS   4) Do All (This will remove everything in ~/goinfre)\n"
+    echo -e "$_RED\t  PRESS   "0" TO EXIT\n"
+    read -p $'\e[35m\tYOUR CHOICE:\e[0m ' -n 1 INPUT
+    case $INPUT in
+        1)
+            setenv
+        ;;
+        2)
+            setvb
+        ;;
+        3)
+            setvag
+        ;;
+        4)
+            doall
+        ;;
+        0) break ;;
+    esac
+    read -p $'\e[35m\n\tPRESS ENTER TO CONTINUE\n\e[0m' END
+done
+clear
